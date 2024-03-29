@@ -48,7 +48,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 
-export const selfEvents: Artwork[] = [
+const khudkaevents: Artwork[] = [
   {
     title: "7th Film Festival",
     details: "Welcoming all the talented film makers with their films and dreams.Extended deadline: March 5th, 2024 For more: https://jiffindia.org/delhi/",
@@ -143,7 +143,7 @@ export default function Page() {
           </CardFooter>
         </Card>
       </AlertDialog>
-      <LSTSections title="Previous Published Events" events={selfEvents} />
+      <LSTSections title="Previous Published Events" events={khudkaevents} />
     </div>
   )
 }
