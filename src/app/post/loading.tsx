@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function loading() {
+export default function Loading() {
     return (
         <div className="flex flex-col gap-4 justify-start items-start w-full">
             <div className="w-full p-4 px-12">

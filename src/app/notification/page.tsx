@@ -30,15 +30,15 @@ let notifications: Notification[] = [
   }
 ];
 
-export default function page() {
+export default function Page() {
   return (
     <div className="px-6">
       <h2 className="text-2xl font-bold mb-5">Notifications</h2>
       <div className="flex flex-col gap-2 justify-start items-start">
-        {notifications.map(d => {
+        {notifications.map((d, cnt) => {
           const Icon = (Icons as IconMap)[d.icon];
           return (
-            <Alert>
+            <Alert key={cnt}>
               <Icon className="h-4 w-4" />
               <AlertTitle className="font-medium">{d.title}</AlertTitle>
               <AlertDescription className="opacity-80">{d.details}</AlertDescription>

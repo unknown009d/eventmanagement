@@ -65,7 +65,7 @@ export const selfEvents: Artwork[] = [
   },
 ]
 
-export default function page() {
+export default function Page() {
   const [date, setDate] = useState<Date>()
 
   return (

@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function page() {
+export default function Page() {
     return (
         <>Under development</>
     )
