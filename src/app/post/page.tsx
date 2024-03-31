@@ -112,13 +112,13 @@ export default function Page() {
         }),
       })
       form.reset();
-      setPreview(undefined)
+      setPreview(null)
     } catch (error: any) {
       toast.warning(error)
     }
   }
 
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState<String | ArrayBuffer | null>(null);
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
