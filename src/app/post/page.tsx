@@ -241,7 +241,7 @@ export default function Page() {
                               <p className="opacity-50 text-sm">Select to upload image</p>
                             </div>
                             :
-                            <img src={preview} className="w-full object-cover" alt="Image Preview" />
+                            <img src={preview.toString()} className="w-full object-cover" alt="Image Preview" />
                           }
                         </div>
                       </label>
