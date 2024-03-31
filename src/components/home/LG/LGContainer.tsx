@@ -57,9 +57,9 @@ export const nearby: Artwork[] = [
 export default function LGContainer() {
     return (
         <>
-            <LGSection title="Featured" events={events1} />
-            <LSTSections title="Upcomming" events={upcomming} />
-            <LSTSections title="Nearby Locations" events={nearby} />
+            <LGSection title="Featured Events" events={events1} />
+            <LSTSections title="Upcomming Events" events={upcomming} />
+            <LSTSections title="Nearby Events" events={nearby} />
         </>
     )
 }

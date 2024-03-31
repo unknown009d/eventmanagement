@@ -9,11 +9,11 @@ export default async function Home() {
   const user = await currentUser();
 
   return (
-    <main className="w-full flex flex-col justify-start items-start gap-4 pb-20">
+    <main className="w-full flex flex-col justify-start items-start gap-4">
       <div className="px-6 w-full flex justify-between items-center">
         <div className="flex flex-col justify-start items-start">
-          <h2 className="">Welcome, <span className="font-bold">{user ? user.firstName : "user"}</span></h2>
-          <LocationBox className="opacity-50 p-1 px-0" />
+          <h3 className="">Welcome, <span className="font-bold">{user ? user.firstName : "user"}</span></h3>
+          <LocationBox className="opacity-80 p-1 px-0" />
         </div>
         {!user ?
           <>

@@ -1,5 +1,9 @@
+import { UserButton, UserProfile } from "@clerk/nextjs";
+
 export default function Page() {
   return (
-    <div>Under Development</div>
+    <div>
+      <UserProfile />
+    </div>
   )
 }

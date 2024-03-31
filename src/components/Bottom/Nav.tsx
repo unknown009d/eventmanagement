@@ -38,31 +38,31 @@ export default function Nav({ className }: {
                 "activeitems": menu == 1
             })}>
                 <Home size={20} />
-                <span className={`transition-all text-xs font-semibold absolute -bottom-4 ${menu == 1 ? '' : 'hidden'} `}>Home</span>
+                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 1 ? '' : 'hidden'} `}>Home</span>
             </Link>
             <Link href="/tickets" className={cn("transition-all p-4 opacity-30 flex flex-col gap-2 items-center justify-center", {
                 "activeitems": menu == 2
             })}>
                 <Ticket size={20} />
-                <span className={`transition-all text-xs font-semibold absolute -bottom-4 ${menu == 2 ? '' : 'hidden'} `}>Tickets</span>
+                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 2 ? '' : 'hidden'} `}>Tickets</span>
             </Link>
             <Link href="/post" className={cn("transition-all p-4 opacity-30 flex flex-col gap-2 items-center justify-center", {
                 "activeitems": menu == 3
             })}>
                 <CalendarPlus size={20} />
-                <span className={`transition-all text-xs font-semibold absolute -bottom-4 ${menu == 3 ? '' : 'hidden'} `}>Post</span>
+                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 3 ? '' : 'hidden'} `}>Post</span>
             </Link>
             <Link href="/notification" className={cn("transition-all p-4 opacity-30 flex flex-col gap-2 items-center justify-center", {
                 "activeitems": menu == 4
             })}>
                 <Bell size={20} />
-                <span className={`transition-all text-xs font-semibold absolute -bottom-4 ${menu == 4 ? '' : 'hidden'} `}>Updates</span>
+                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 4 ? '' : 'hidden'} `}>Updates</span>
             </Link>
             <Link href="/settings" className={cn("transition-all p-4 opacity-30 flex flex-col gap-2 items-center justify-center", {
                 "activeitems": menu == 5
             })}>
                 <UserRound size={20} />
-                <span className={`transition-all text-xs font-semibold absolute -bottom-4 ${menu == 5 ? '' : 'hidden'} `}>Profile</span>
+                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 5 ? '' : 'hidden'} `}>Profile</span>
             </Link>
         </div>
     )

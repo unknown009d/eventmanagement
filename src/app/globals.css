@@ -97,6 +97,12 @@
   box-shadow: 0 -4px 40px -8px #00000020;
 }
 
-.activeitems{
+.activeitems {
   @apply -translate-y-3.5 relative opacity-100 pb-0;
+}
+.activeitems svg {
+  @apply translate-y-1;
+}
+main {
+  @apply pb-20;
 }
