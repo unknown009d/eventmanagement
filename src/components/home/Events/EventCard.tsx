@@ -16,7 +16,7 @@ interface LocationBoxProps {
     className?: string;
     title?: string;
     details?: string;
-    img?: string;
+    img?: string | String | ArrayBuffer;
     date?: string;
     location?: string;
     alt?: number;
@@ -54,7 +54,7 @@ export default function EventCard({ className, alt = 1, title = "Event title",
                 })}>
                     {unOptimizedImg
                         ? <>
-                            <img src={img} alt={img + alt}
+                            <img src={img.toString()} alt={img.toString() + alt.toString()}
                                 className={cn("w-full object-cover",
                                     {
                                         'aspect-square w-[140px] h-full': listitem,
