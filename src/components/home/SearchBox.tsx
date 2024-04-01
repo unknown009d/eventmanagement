@@ -16,10 +16,6 @@ const SearchBox = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
 
 
-    const handleClick = (title: string) => {
-      router.push(`/events/${title.split(" ").map(e => e.toLowerCase()).join("-")}`)
-    }
-
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
