@@ -1,7 +1,7 @@
 import { events1, khudkaevents, nearby, upcomming } from "@/lib/events";
 import Image from "next/image"
 import { cn } from "@/lib/utils";
-import { ChevronLeft, Clock, MapPin, MoveRight } from "lucide-react";
+import { CalendarClock, CalendarDays, ChevronLeft, Clock, MapPin, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <p>{pageEvent.location}</p>
             </div>
             <div className="flex gap-2 items-center">
-              <Clock size={16} />
+              <CalendarDays size={16} />
               <p>{pageEvent.date}</p>
             </div>
           </div>
