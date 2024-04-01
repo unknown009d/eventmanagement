@@ -54,7 +54,9 @@ const formSchema = z.object({
     .refine((file) => file[0]?.size <= 5000000, `Max file size is 5MB.`),
 })
 
-import { khudkaevents } from "@/lib/events"
+import { events1, khudkaevents, nearby, upcomming } from "@/lib/events"
+
+const allevents = [...khudkaevents, ...events1, ...upcomming, ...nearby]
 
 export default function Page() {
   const [date, setDate] = useState<Date>()
@@ -76,7 +78,7 @@ export default function Page() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      khudkaevents.forEach(d => {
+      allevents.forEach(d => {
         if (d.title == values.title) throw new Error("Post Title already exists, consider creating a unique post title")
       })
       khudkaevents.push({
@@ -116,8 +118,8 @@ export default function Page() {
 
   return (
 
-    <main>
-      <Card className="max-w-[580px] mb-6 md:mb-12 mx-auto">
+    <main className="w-full">
+      <Card className="w-full mb-6 md:mb-12 mx-auto">
         <CardHeader>
           <CardTitle>Create Event</CardTitle>
           <CardDescription>Publish your events by creating a post</CardDescription>
