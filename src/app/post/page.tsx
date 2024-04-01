@@ -245,7 +245,7 @@ export default function Page() {
           </Form>
         </CardContent>
       </Card>
-      <LSTSections title="Previous Published Events" reverseList={true} unOptimizedImg={true} events={khudkaevents} />
+      <LSTSections title="Previous Published Events" unOptimizedImg={true} events={khudkaevents.reverse()} />
     </main >
   )
 }
