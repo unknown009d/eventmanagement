@@ -26,6 +26,6 @@ export default function Recents({ title, events }: {
         </ScrollArea>
       </div>
       :
-      <></>
+      <h4 className="text-sm opacity-80">No {title} found</h4>
   );
 }
