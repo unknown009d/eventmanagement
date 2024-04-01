@@ -54,24 +54,7 @@ const formSchema = z.object({
     .refine((file) => file[0]?.size <= 5000000, `Max file size is 5MB.`),
 })
 
-
-
-const khudkaevents: Artwork[] = [
-  {
-    title: "7th Film Festival",
-    details: "Welcoming all the talented film makers with their films and dreams.Extended deadline: March 5th, 2024 For more: https://jiffindia.org/delhi/",
-    img: "/EventImages/Event3.png",
-    location: "New Delhi",
-    date: "April 8, 2024 at 10:30 AM",
-  },
-  {
-    title: "Hanghatik Celebration",
-    details: "The celebration ain't gonna be over without y'all. Join us for the 15 Years of Hanghatik Celebration, ALMOST A FESTIVAL (Anniversary Edition)",
-    img: "/EventImages/Event4.jpg",
-    location: "New Delhi",
-    date: "April 18, 2024 at 9:30 AM",
-  },
-]
+import { khudkaevents } from "@/lib/events"
 
 export default function Page() {
   const [date, setDate] = useState<Date>()
