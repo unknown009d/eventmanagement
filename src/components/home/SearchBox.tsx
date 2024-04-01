@@ -15,7 +15,6 @@ export interface InputProps
 const SearchBox = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
 
-
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
