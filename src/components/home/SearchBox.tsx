@@ -24,7 +24,7 @@ const SearchBox = React.forwardRef<HTMLInputElement, InputProps>(
     // Filter events based on search term
     const filteredEvents = allEvents.filter(event =>
       event.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ).slice(0,5);
 
     return (
       <div className="group">
