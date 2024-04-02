@@ -23,6 +23,6 @@ export default function LSTSections({ title, events, reverseList, unOptimizedImg
                 </div>
             </div>
             :
-            <h4 className="text-sm opacity-80">No {title} found</h4>
+            <h4 className="text-sm opacity-60 px-6">No {title} found</h4>
     );
 }

@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon, CloudUpload, FileImage, Plus } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn, imagePlaceHolder, MAX_FILE_SIZE, MAX_FILE_SIZE_FULL, ACCEPTED_IMAGE_TYPES, acceptImage } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar"
 import {
   Popover,
@@ -50,8 +50,9 @@ const formSchema = z.object({
     required_error: "Event date is needed",
   }),
   category: z.string(),
-  banner: z.any().refine((file) => file?.length == 1, 'File is required.')
-    .refine((file) => file[0]?.size <= 5000000, `Max file size is 5MB.`),
+  banner: z.any().optional()
+    .refine(file => file.length == 1 ? ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type) ? true : false : true, 'Invalid file. choose either JPEG or PNG image')
+    .refine(file => file.length == 1 ? file[0]?.size <= MAX_FILE_SIZE_FULL ? true : false : true, `Max file size allowed is ${MAX_FILE_SIZE} MB.`)
 })
 
 import { events1, khudkaevents, nearby, upcomming } from "@/lib/events"
@@ -84,7 +85,7 @@ export default function Page() {
       khudkaevents.push({
         title: values.title,
         details: values.description,
-        img: !preview ? "" : preview,
+        img: !preview ? imagePlaceHolder : preview,
         location: values.location,
         date: values.date.toLocaleString('en-US', {
           timeZone: "Asia/Kolkata",
@@ -118,7 +119,7 @@ export default function Page() {
 
   return (
 
-    <main className="w-full">
+    <main className="w-full mb-10">
       <Card className="w-full mb-6 md:mb-12 mx-auto">
         <CardHeader>
           <CardTitle>Create Event</CardTitle>
@@ -218,7 +219,7 @@ export default function Page() {
                     <FormLabel>Banner of the Event</FormLabel>
                     <FormControl>
                       <label>
-                        <Input type="file" accept=".webp,.jpg,.png" {...fileRef} onChange={handleFileChange} />
+                        <Input type="file" accept={acceptImage} {...fileRef} onChange={handleFileChange} />
                         <div className="mt-2 w-full aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer">
                           {preview == null
                             ? <div className="flex flex-col justify-center items-center gap-2">
@@ -248,6 +249,6 @@ export default function Page() {
         </CardContent>
       </Card>
       <LSTSections title="Previous Published Events" unOptimizedImg={true} events={khudkaevents.reverse()} />
-    </main >
+    </main>
   )
 }
