@@ -39,18 +39,22 @@ const SearchBox = React.forwardRef<HTMLInputElement, InputProps>(
           />
         </div>
         <div className="hidden group-focus-within:flex flex-col gap-2 shadow p-4 rounded-xl">
-          {/* Display the filtered events */}
-          {filteredEvents.map((event, cnt) => (
-            <Link href={`/events/${event.title.split(" ").map(e => e.toLowerCase()).join("-")}`} key={event.title} className={cn("bg-white z-10 border-gray-200 py-2 text-sm", {
-              "border-b": (cnt + 1) < filteredEvents.length
-            })}>
-              <h2>{event.title}</h2>
-              <div className="flex justify-between">
-                <p>{event.location}</p>
-                <p>{event.date}</p>
-              </div>
-            </Link>
-          ))}
+          {
+            filteredEvents.length > 0 ?
+              filteredEvents.map((event, cnt) => (
+                <Link href={`/events/${event.title.split(" ").map(e => e.toLowerCase()).join("-")}`} key={event.title} className={cn("bg-white z-10 border-gray-200 py-2 text-sm", {
+                  "border-b": (cnt + 1) < filteredEvents.length
+                })}>
+                  <h2>{event.title}</h2>
+                  <div className="flex justify-between">
+                    <p>{event.location}</p>
+                    <p>{event.date}</p>
+                  </div>
+                </Link>
+              ))
+              :
+              <p className="text-left opacity-50 text-sm">No events found</p>
+          }
         </div>
       </div>
     )

@@ -1,31 +1,28 @@
-"use client"
 import { events1, khudkaevents, nearby, upcomming } from "@/lib/events";
 import Image from "next/image"
 import { cn } from "@/lib/utils";
-import { ChevronLeft, Clock, MapPin } from "lucide-react";
+import { CalendarClock, CalendarDays, ChevronLeft, Clock, MapPin, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { currentUser } from "@clerk/nextjs";
+import BackButton from "@/components/EventPage/BackButton";
+import BookTicket from "@/components/EventPage/BookTicket";
+import Link from "next/link";
 
 const allEvents = [...events1, ...upcomming, ...nearby];
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
+
+  const user = await currentUser();
 
   const pageEvent = allEvents.find(event => event.title.toLowerCase() == params.slug.split('-').join(' '));
-
-  const router = useRouter();
-
-  const handleClick = () => {
-    toast.warning("This Feature is not available now")
-  }
 
   if (pageEvent) {
 
     return (
-      <div className="px-6">
-        <Button onClick={() => {router.back()}} variant={"ghost"} className="h-12 w-12 mb-4 p-2">
-          <ChevronLeft />
-        </Button>
+      <main className="px-6">
+        <BackButton />
         <Image src={`/EventImages/${pageEvent.img}`} alt={pageEvent.title} width={800} height={600} className="w-full object-cover rounded-xl" />
         <div className="mt-4 flex flex-col gap-2">
           <h2 className="font-bold text-2xl">{pageEvent.title}</h2>
@@ -35,14 +32,25 @@ export default function Page({ params }: { params: { slug: string } }) {
               <p>{pageEvent.location}</p>
             </div>
             <div className="flex gap-2 items-center">
-              <Clock size={16} />
+              <CalendarDays size={16} />
               <p>{pageEvent.date}</p>
             </div>
           </div>
           <p className="opacity-80 text-left mt-2">{pageEvent.details}</p>
         </div>
-        <Button onClick={handleClick} className="mt-8 w-full">Book tickets</Button>
-      </div>
+        {user
+          ?
+          <BookTicket />
+          :
+          <p className="w-full text-center opacity-50 mt-5 text-sm flex py-5 items-center">
+            <div className="flex-grow border-t border-gray-400"></div>
+            <div className="flex-shrink mx-2">
+              Please <Link href="/settings" className="underline">login</Link> to book tickets
+            </div>
+            <div className="flex-grow border-t border-gray-400"></div>
+          </p>
+        }
+      </main>
     )
   }
 
