@@ -9,12 +9,19 @@ import { currentUser } from "@clerk/nextjs";
 import BackButton from "@/components/EventPage/BackButton";
 import BookTicket from "@/components/EventPage/BookTicket";
 import Link from "next/link";
+import connectMongo from "@/lib/connectMongo";
+import Evento from "@/Modals/Evento";
 
-const allEvents = [...events1, ...upcomming, ...nearby];
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
   const user = await currentUser();
+
+  await connectMongo()
+
+  const myevent = await Evento.find()
+
+  const allEvents = [...events1, ...upcomming, ...nearby, ...myevent];
 
   const pageEvent = allEvents.find(event => event.title.toLowerCase() == params.slug.split('-').join(' '));
 
@@ -23,9 +30,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return (
       <main className="px-6">
         <BackButton />
-        <Image src={`/EventImages/${pageEvent.img}`} alt={pageEvent.title} width={800} height={600} className="w-full object-cover rounded-xl" />
+        <Image src={`${pageEvent.img}`} alt={pageEvent.title} width={800} height={600} className="w-full object-cover rounded-xl" />
         <div className="mt-4 flex flex-col gap-2">
-          <h2 className="font-bold text-2xl">{pageEvent.title}</h2>
+          <div className="flex flex-col justify-start items-start">
+            <p className="text-xs opacity-50 hidden">Hosted by vbunitynet@gmail.com</p>
+            <h2 className="font-bold text-2xl">{pageEvent.title}</h2>
+          </div>
           <div className="flex justify-between text-sm">
             <div className="flex gap-2 items-center">
               <MapPin size={16} />

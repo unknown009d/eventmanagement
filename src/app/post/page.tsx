@@ -22,7 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Textarea } from "@/components/ui/textarea"
 
@@ -55,12 +55,47 @@ const formSchema = z.object({
     .refine(file => file.length == 1 ? file[0]?.size <= MAX_FILE_SIZE_FULL ? true : false : true, `Max file size allowed is ${MAX_FILE_SIZE} MB.`)
 })
 
-import { events1, khudkaevents, nearby, upcomming } from "@/lib/events"
+// import { events1, khudkaevents, nearby, upcomming } from "@/lib/events"
 
-const allevents = [...khudkaevents, ...events1, ...upcomming, ...nearby]
+// const allevents = [...khudkaevents, ...events1, ...upcomming, ...nearby]
+
+
+// async function fetchEvents() {
+//   try {
+//     const response = await fetch('/api/events'); // replace '/api/events' with your API endpoint
+//     const data = await response.json();
+//     const khudkaevents = data.data;
+//     return khudkaevents;
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// }
+// fetchEvents().then(khudkaevents => {
+//   // You can now use khudkaevents here
+//   khudkaevents.forEach((k: any) => {
+//     mevents.push(k)
+//   })
+// });
 
 export default function Page() {
   const [date, setDate] = useState<Date>()
+  const [btn, setBtn] = useState(false)
+
+  const [mevents, setMevents] = useState<Artwork[]>([]);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const response = await fetch('/api/events');
+        const data = await response.json();
+        setMevents(data.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    fetchEvents();
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
@@ -77,12 +112,13 @@ export default function Page() {
 
   const fileRef = form.register("banner");
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setBtn(true)
     try {
-      allevents.forEach(d => {
-        if (d.title == values.title) throw new Error("Post Title already exists, consider creating a unique post title")
-      })
-      khudkaevents.push({
+      // allevents.forEach(d => {
+      //   if (d.title == values.title) throw new Error("Post Title already exists, consider creating a unique post title")
+      // })
+      const newEvent = {
         title: values.title,
         details: values.description,
         img: !preview ? imagePlaceHolder : preview,
@@ -96,9 +132,27 @@ export default function Page() {
           minute: 'numeric',
           hour12: true
         }),
-      })
-      form.reset();
-      setPreview(null)
+      }
+      const response = await fetch('/api/post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newEvent),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const responseData = await response.json();
+      if (responseData.success) {
+        mevents.push(newEvent);
+        form.reset();
+        setPreview(null)
+        setBtn(false)
+      } else {
+        throw new Error(responseData.message || 'Unknown error');
+      }
     } catch (error: any) {
       toast.warning(error)
     }
@@ -239,7 +293,7 @@ export default function Page() {
                 )}
               />
               <div className="w-full flex justify-end items-center mt-6">
-                <Button type="submit" className="flex gap-2">
+                <Button type="submit" className="flex gap-2" disabled={btn}>
                   Post new event
                   <Plus size={16} />
                 </Button>
@@ -248,7 +302,7 @@ export default function Page() {
           </Form>
         </CardContent>
       </Card>
-      <LSTSections title="Previous Published Events" unOptimizedImg={true} events={khudkaevents.reverse()} />
+      <LSTSections title="Previous Published Events" unOptimizedImg={true} events={mevents.reverse()} />
     </main>
   )
 }

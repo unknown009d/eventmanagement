@@ -62,7 +62,7 @@ export default function EventCard({ className, alt = 1, title = "Event title",
                                     })} />
                         </>
                         :
-                        <Image src={`/EventImages/${img}`} alt={title.split(" ").map(w => w[0]).join("") + alt} width={200} height={200} className={cn("w-full object-cover",
+                        <Image src={`${img}`} alt={title.split(" ").map(w => w[0]).join("") + alt} width={200} height={200} className={cn("w-full object-cover",
                             {
                                 'aspect-square w-[140px] h-full': listitem,
                                 'aspect-video': !listitem
