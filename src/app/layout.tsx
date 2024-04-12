@@ -26,7 +26,7 @@ export default function RootLayout({
             {children}
           </div>
           <Nav className="md:max-w-[480px] md:rounded-xl md:m-5 md:me-2 md:left-auto md:right-0" />
-          <Toaster />
+          <Toaster position="top-right" />
         </body>
       </html>
     </ClerkProvider>

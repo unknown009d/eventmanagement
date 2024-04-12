@@ -21,6 +21,7 @@ interface LocationBoxProps {
     location?: string;
     alt?: number;
     badge?: string;
+    badgeVariant?: "secondary" | "default" | "destructive" | "outline" | null | undefined;
     listitem?: boolean;
     unOptimizedImg?: boolean;
     eventslug?: string;
@@ -28,7 +29,7 @@ interface LocationBoxProps {
 
 export default function EventCard({ className, alt = 1, title = "Event title",
     details = "Event Description Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    img = "ImagePlaceholder.webp", date = Date().slice(0, 15), location = "Agartala", badge = undefined,
+    img = "ImagePlaceholder.webp", date = Date().slice(0, 15), location = "Agartala", badge = undefined, badgeVariant = "secondary",
     listitem = false, unOptimizedImg = false, eventslug = "" }: LocationBoxProps) {
 
     const router = useRouter();
@@ -44,7 +45,7 @@ export default function EventCard({ className, alt = 1, title = "Event title",
                 'grid w-[300px] h-[280px] overflow-hidden': !listitem
             })}>
                 {badge != undefined ?
-                    <Badge variant={"secondary"} className={cn("absolute bg-emerald-400 m-2 top-0 z-10 right-0", {
+                    <Badge variant={badgeVariant} className={cn("absolute m-2 top-0 z-10 right-0", {
                         "-translate-y-2 translate-x-2 m-0": listitem
                     })}>{badge}</Badge>
                     :

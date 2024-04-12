@@ -1,30 +1,48 @@
 "use client"
 import * as React from "react"
-
-import { cn } from "@/lib/utils"
+import { cn, validateText } from "@/lib/utils"
 import { Search } from "lucide-react"
-import { events1, khudkaevents, nearby, upcomming } from "@/lib/events"
-import { useState } from "react"
+import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
 
-const allEvents = [...events1, ...upcomming, ...nearby];
-
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> { }
-
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
 const SearchBox = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
 
     const [searchTerm, setSearchTerm] = useState('');
+    const events = useRef([]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchTerm(e.target.value);
+      setSearchTerm(e.target.value)
     }
 
-    // Filter events based on search term
-    const filteredEvents = allEvents.filter(event =>
-      event.title.toLowerCase().includes(searchTerm.toLowerCase())
-    ).slice(0,5);
+
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`/api/post?title=${encodeURIComponent(searchTerm)}&count=5&sort=1`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        events.current = data.message
+      } catch (error) {
+        console.error('There has been a problem with your fetch operation: ', error);
+      }
+    };
+
+    useEffect(() => {
+      fetchEvents()
+    }, [searchTerm.length <= 1])
+
+    useEffect(() => {
+      fetchEvents()
+    }, [])
+
+    useEffect(() => {
+      if (searchTerm) {
+        fetchEvents();
+      }
+    }, [searchTerm]);
 
     return (
       <div className="group">
@@ -34,16 +52,17 @@ const SearchBox = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             className="w-full focus:outline-none"
             ref={ref}
-            onChange={handleChange}
+            onInput={handleChange}
+            onChange={validateText}
             {...props}
           />
         </div>
-        <div className="hidden group-focus-within:flex flex-col gap-2 shadow p-4 rounded-xl">
+        <div className={"flex-col gap-2 shadow p-4 rounded-xl hidden group-focus:flex group-focus-within:flex"}>
           {
-            filteredEvents.length > 0 ?
-              filteredEvents.map((event, cnt) => (
-                <Link href={`/events/${event.title.split(" ").map(e => e.toLowerCase()).join("-")}`} key={event.title} className={cn("bg-white z-10 border-gray-200 py-2 text-sm", {
-                  "border-b": (cnt + 1) < filteredEvents.length
+            events.current.length > 0 ?
+              events.current.map((event: any, cnt) => (
+                <Link href={`/events/${event.title.split(" ").map((e: string) => e.toLowerCase()).join("-")}`} key={event.title} className={cn("bg-white z-10 border-gray-200 py-2 text-sm", {
+                  "border-b": (cnt + 1) < events.current.length
                 })}>
                   <h2>{event.title}</h2>
                   <div className="flex justify-between">
@@ -53,10 +72,13 @@ const SearchBox = React.forwardRef<HTMLInputElement, InputProps>(
                 </Link>
               ))
               :
-              <p className="text-left opacity-50 text-sm">No events found</p>
+              searchTerm.length <= 1
+                ? <p className="text-left opacity-50 text-sm">Type something to search...</p>
+                :
+                <p className="text-left opacity-50 text-sm">No events found</p>
           }
         </div>
-      </div>
+      </div >
     )
   }
 )

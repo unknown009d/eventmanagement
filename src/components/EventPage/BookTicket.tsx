@@ -10,7 +10,7 @@ export default function BookTicket() {
     }
 
     return (
-        <Button onClick={handleClick} className="mt-8 w-full flex justify-between items-center">
+        <Button onClick={handleClick} className="flex justify-between items-center gap-2 w-full">
             Book tickets
             <MoveRight />
         </Button>

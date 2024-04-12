@@ -1,6 +1,6 @@
 "use client"
 import { cn } from "@/lib/utils"
-import { Bell, CalendarPlus, Home, Ticket, UserRound } from "lucide-react"
+import { Bell, CalendarPlus, CalendarRange, Home, Ticket, UserRound } from "lucide-react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 
@@ -21,7 +21,7 @@ export default function Nav({ className }: {
         case '/post':
             menu = 3
             break
-        case '/notification':
+        case '/myposts':
             menu = 4
             break
         case '/settings':
@@ -50,13 +50,13 @@ export default function Nav({ className }: {
                 "activeitems": menu == 3
             })}>
                 <CalendarPlus size={20} />
-                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 3 ? '' : 'hidden'} `}>Post</span>
+                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 3 ? '' : 'hidden'} `}>Create</span>
             </Link>
-            <Link href="/notification" className={cn("transition-all p-4 opacity-30 flex flex-col gap-2 items-center justify-center", {
+            <Link href="/myposts" className={cn("transition-all p-4 opacity-30 flex flex-col gap-2 items-center justify-center", {
                 "activeitems": menu == 4
             })}>
-                <Bell size={20} />
-                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 4 ? '' : 'hidden'} `}>Updates</span>
+                <CalendarRange size={20} />
+                <span className={`transition-all text-xs font-semibold absolute -bottom-5 ${menu == 4 ? '' : 'hidden'} `}>Posts</span>
             </Link>
             <Link href="/settings" className={cn("transition-all p-4 opacity-30 flex flex-col gap-2 items-center justify-center", {
                 "activeitems": menu == 5
