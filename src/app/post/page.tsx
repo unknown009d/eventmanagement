@@ -15,6 +15,7 @@ export default function Post() {
   let [img, setImg] = useState<File>()
   let [btn, setBtn] = useState(false)
   const [username, setUsername] = useState<string | undefined>(undefined);
+  const [cemail, setCemail] = useState<string | undefined>(undefined);
 
   const { isLoaded, isSignedIn, user } = useUser();
 
@@ -22,6 +23,7 @@ export default function Post() {
     if (isLoaded || isSignedIn) {
       const emailaddress = user?.emailAddresses[0].toString();
       setUsername(user?.username || user?.firstName || emailaddress?.split("@")[0])
+      setUsername(emailaddress)
     }
   }, [isLoaded, isSignedIn, user]);
 
@@ -39,6 +41,7 @@ export default function Post() {
       if (img) formData.append("img", img);
       if (date) formData.append('edate', date)
       if (username) formData.append('creator', username)
+      if (cemail) formData.append('cemail', cemail)
 
       const postevent = await fetch("/api/post/", {
         method: 'POST',

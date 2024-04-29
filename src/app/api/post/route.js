@@ -84,7 +84,7 @@ async function uploadFile(data, title) {
 
 export async function POST(req) {
   const data = await req.formData();
-  const { title, details, location, edate, time, creator, cdnt } =
+  const { title, details, location, edate, time, creator, cemail, cdnt } =
     Object.fromEntries(data.entries());
 
   // Check if an event with the same name already exists
@@ -113,7 +113,7 @@ export async function POST(req) {
 
   let savedEvent;
   try {
-    await connectMongo();
+    // await connectMongo();
     // Create a new event
     const eventData = {
       title: title,
@@ -137,6 +137,13 @@ export async function POST(req) {
     // Save the new event to the database
     savedEvent = await newEvent.save();
     // savedEvent = newEvent;
+
+    // Update the user with the event id
+    await User.findOneAndUpdate(
+      { email: cemail },
+      { $push: { events: savedEvent._id } },
+      { new: true }
+    );
   } catch (error) {
     return NextResponse.json(
       {

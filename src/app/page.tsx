@@ -20,7 +20,7 @@ async function usercheck(email: string | undefined) {
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-
+  // if (email) localStorage.setItem("email", email);
   return res.json();
 }
 

@@ -49,7 +49,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         <img src={`${pageEvent.img}`} alt={pageEvent.title} className="w-full object-cover rounded-xl" />
         <div className="mt-4 flex flex-col gap-2">
           <div className="flex flex-col justify-start items-start">
-            <p className="text-xs opacity-50 hidden">Hosted by vbunitynet@gmail.com</p>
+            <p className="text-xs opacity-50">Hosted by {pageEvent.createdBy}</p>
             <h2 className="font-bold text-2xl">{pageEvent.title}</h2>
           </div>
           <div className="flex justify-between text-sm">
@@ -74,7 +74,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                   <MapPinned size={20} />
                   Get Directions
                 </Button>
-                <BookTicket />
+                <BookTicket id={pageEvent._id} user={user} />
               </div>
               :
               <ErrorText>
